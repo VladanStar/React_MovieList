@@ -1,6 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
+import Pretraga from "./components/Pretraga/Pretraga";
+import Filmovi from "./components/Filmovi/Filmovi";
+import OdabraniFilmovi from "./components/OdabraniFilmovi/OdabraniFilmovi";
 
 function App() {
   const [searchString, setSearchString] = useState("");
@@ -30,104 +33,28 @@ function App() {
     }
   };
 
-  const formSubmit = (event) => {
-    event.preventDefault();
-    setSearchString(event.target.searchString.value);
-    //   console.log(event.target.searchString.value );
-  };
+ 
 
-  const dodaj = (idx) => {
-    setOdabraniFilm([...odabraniFilm, film[idx]]);
-  };
-  const obrisi = (idx) => {
-    let temp = odabraniFilm;
-    temp.splice(idx, 1);
-    setOdabraniFilm([...temp]);
-  };
+ 
+
   return (
     <>
-      <div className="container">
-        <form onSubmit={(event) => formSubmit(event)}>
-          <div className="input-group mt-3 mb-3">
-            <input
-              type="text"
-              className="form-control searchString"
-              name="searchString"
-              placeholder="Serach"
-              aria-label="Search"
-              aria-describedby="button-addon2"
-            />
-            <button
-              className="btn btn-primary dgmPretraga"
-              type="submit"
-              id="button-addon2"
-            >
-              Button
-            </button>
-          </div>
-        </form>
+    <Pretraga filmovi ={film} setSearchString={setSearchString}/>
+     
         <hr />
 
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-8">
               <div className="row">
-                {film.map((element, idx) => {
-                  return (
-                    <div className="col">
-                      <div className="card" style={{ width: "18rem" }}>
-                        <img
-                          src={element.Poster}
-                          className="card-img-top"
-                          alt="..."
-                        />
-                        <div className="card-body">
-                          <h5 className="card-title">{element.Title}</h5>
-                          <p className="card-text">
-                            Tip: {element.Type} Godina: {element.Year}
-                          </p>
-                          <button
-                            className="btn btn-primary"
-                            onClick={()=>dodaj(idx)}
-                          >
-                            Dodaj u korpu
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+               <Filmovi film ={film} odabraniFilm={odabraniFilm} setOdabraniFilm={setOdabraniFilm}/>
               </div>
             </div>
             <div className="col-md-4">
-              {odabraniFilm.map((element, idx) => {
-                return (
-                  <div className="col">
-                    <div className="card" style={{ width: "18rem" }}>
-                      <img
-                        src={element.Poster}
-                        className="card-img-top"
-                        alt="..."
-                      />
-                      <div className="card-body">
-                        <h5 className="card-title">{element.Title}</h5>
-                        <p className="card-text">
-                          Tip: {element.Type} Godina: {element.Year}
-                        </p>
-                        <button
-                          className="btn btn-primary"
-                          onClick={()=> obrisi(idx)}
-                        >
-                          Obrisi
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+             <OdabraniFilmovi odabraniFilm ={odabraniFilm} setOdabraniFilm={setOdabraniFilm}/>
             </div>
           </div>
-        </div>
+     
       </div>
     </>
   );
